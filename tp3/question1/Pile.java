@@ -6,7 +6,7 @@ import question1.PileVideException;
 /**
  * A remplacer par votre classe Pile .
  * 
- * @author (votre nom)
+ * @author Samira Rahme
  * @version (un numéro de version ou une date)
  */
 public class Pile {

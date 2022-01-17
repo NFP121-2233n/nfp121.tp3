@@ -19,8 +19,10 @@ public class Pile2 implements PileI {
      *            la taille de la pile, la taille doit etre > 0
      */
     public Pile2(int taille) {
-        // prevoir le cas <=0
-        // a completer
+        if (taille <= 0)
+            taille = CAPACITE_PAR_DEFAUT;
+        this.stk = new Stack<Object>();
+        this.capacite = taille;
     }
 
     // constructeur fourni
@@ -29,17 +31,21 @@ public class Pile2 implements PileI {
     }
 
     public void empiler(Object o) throws PilePleineException {
-        // a completer
+        if (estPleine())
+            throw new PilePleineException();
+        this.stk.push(o);
     }
 
     public Object depiler() throws PileVideException {
-        // a completer
-        return null;
+        if (estVide())
+          throw new PileVideException();
+        return this.stk.pop();
     }
 
     public Object sommet() throws PileVideException {
-        // a completer
-        return null;
+        if (estVide())
+            throw new PileVideException();
+        return this.stk.peek();
     }
 
     /**
@@ -49,7 +55,7 @@ public class Pile2 implements PileI {
      */
     public boolean estVide() {
         // a completer
-        return false;
+        return stk.isEmpty();
     }
 
     /**
@@ -59,7 +65,7 @@ public class Pile2 implements PileI {
      */
     public boolean estPleine() {
         // a completer
-        return false;
+        return  this.taille() == this.capacite();
     }
 
     /**
@@ -70,13 +76,102 @@ public class Pile2 implements PileI {
      */
     public String toString() {
         String s = "[";
-        // a completer
+           Pile2 temp = new Pile2 (this.capacite());
+        Object elStk = new Object();
+        
+        while (!estVide()){
+            try {
+                elStk = this.depiler();
+                temp.empiler(elStk);
+            } catch (PileVideException videExc){}
+              catch (PilePleineException pleineExc){}
+              
+            s += (elStk == null)? "NULL":elStk;
+            if (!estVide())
+                s += ", ";
+        }
+        
+        rendreElements(this, temp);
         return s + "]";
     }
 
     public boolean equals(Object o) {
-        // a completer
-        return false;
+              
+        if (o == null)
+            return false;
+
+       
+        if (!(o instanceof PileI))
+            return false;
+        PileI secondPile = (PileI)o;
+
+     
+        if (this == secondPile)
+            return true;
+
+      
+        if (this.taille() != secondPile.taille())
+            return false;
+
+      
+        if (this.capacite() != secondPile.capacite())
+            return false;
+
+    
+        if (secondPile.taille() == 0)
+            return true;
+
+        Pile2 premierTemp = new Pile2 (this.taille());
+        Pile2 secondTemp = new Pile2 (secondPile.taille());
+        boolean egales;
+        
+         while (!pile.estVide()) {
+            try {
+                egales = false;
+
+            
+                if (this.sommet() == null){ 
+                    if (secondPile.sommet() == null)
+                        egales = true;
+                }
+                else if (secondPile.sommet() == null){
+                    if (this.sommet() == null)
+                        egales = true;
+                }
+                else if (this.sommet().equals(secondPile.sommet()))
+                    egales = true;
+
+                if (egales) {
+                    Object premierTempElement = this.depiler();
+                    Object secondTempElement = secondPile.depiler();
+                    premierTemp.empiler(premierTempElement);
+                    secondTemp.empiler(secondTempElement);
+                }
+                else {
+                  
+                    rendreElements(this, premierTemp);
+                    rendreElements(secondPile, secondTemp);
+                    return egales;
+                }
+
+            } catch (PileVideException videExc){}
+            catch (PilePleineException pleineExc){}
+        }
+
+      
+        rendreElements(this, premierTemp);
+        rendreElements(secondPile, secondTemp);
+        return true;
+    }
+    
+    public void rendreElements(PileI pileInit, PileI temp){
+        while (!temp.estVide()){
+            try {
+                Object tempElement = temp.depiler();
+                pileInit.empiler(tempElement);
+            } catch (PileVideException videExc){}
+            catch (PilePleineException pleineExc){}
+        }
     }
 
     // fonction fournie
@@ -90,8 +185,7 @@ public class Pile2 implements PileI {
      * @return le nombre d'element
      */
     public int taille() {
-        // a completer
-        return 0;
+         return this.stk.size();
     }
 
     /**
@@ -100,8 +194,7 @@ public class Pile2 implements PileI {
      * @return le nombre d'element
      */
     public int capacite() {
-        // a completer
-        return 0;
+      return this.capacite;
     }
 
 } // Pile2.java

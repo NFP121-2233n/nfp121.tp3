@@ -24,37 +24,81 @@ package question2;
  *          engagements, et suivi d'un appel à tearDown(), qui les détruit.
  */
 public class Pile4Test extends junit.framework.TestCase {
-	// Définissez ici les variables d'instance nécessaires à vos engagements;
-	// Vous pouvez également les saisir automatiquement du présentoir
-	// à l'aide du menu contextuel "Présentoir --> Engagements".
-	// Notez cependant que ce dernier ne peut saisir les objets primitifs
-	// du présentoir (les objets sans constructeur, comme int, float, etc.).
+    // Définissez ici les variables d'instance nécessaires à vos engagements;
+    // Vous pouvez également les saisir automatiquement du présentoir
+    // à l'aide du menu contextuel "Présentoir --> Engagements".
+    // Notez cependant que ce dernier ne peut saisir les objets primitifs
+    // du présentoir (les objets sans constructeur, comme int, float, etc.).
 
-	/**
-	 * Constructeur de la classe-test Pile4Test
-	 */
-	public Pile4Test() {
-	}
+    /**
+     * Constructeur de la classe-test Pile4Test
+     */
+    public Pile4Test() {
+    }
 
-	/**
-	 * Met en place les engagements.
-	 * 
-	 * Méthode appelée avant chaque appel de méthode de test.
-	 */
-	protected void setUp() // throws java.lang.Exception
-	{
-		// Initialisez ici vos engagements
+    /**
+     * Met en place les engagements.
+     * 
+     * Méthode appelée avant chaque appel de méthode de test.
+     */
+    protected void setUp() // throws java.lang.Exception
+    {
+        // Initialisez ici vos engagements
 
-	}
+    }
 
-	/**
-	 * Supprime les engagements
-	 * 
-	 * Méthode appelée après chaque appel de méthode de test.
-	 */
-	protected void tearDown() // throws java.lang.Exception
-	{
-		// Libérez ici les ressources engagées par setUp()
-	}
+    /**
+     * Supprime les engagements
+     * 
+     * Méthode appelée après chaque appel de méthode de test.
+     */
+    protected void tearDown() // throws java.lang.Exception
+    {
+        // Libérez ici les ressources engagées par setUp()
+    }
+
+    public void testingFour() {
+        assertEquals(PileI.CAPACITE_PAR_DEFAUT, p1.capacite());
+      }
+
+
+
+    public void test_Pile_equals() throws Exception {
+
+        p1.empiler(50);
+        p1.empiler(52);
+        p1.empiler(54);
+
+        p2.empiler(50);
+        p2.empiler(52);
+        p2.empiler(54);  
+	    
+        assertTrue("�galit� de deux piles ? ", p1.equals(p2));
+        assertTrue("�galit� de deux piles ? ", p2.equals(p1));
+        assertTrue("�galit� de deux piles ? ", p1.equals(p1));
+
+        p1.empiler(58);
+        p2.empiler(58);
+        assertTrue("�galit� de deux piles ? ", p1.equals(p2));
+
+        p1.empiler(null);
+        p2.empiler(60);
+        assertFalse("�galit� de deux piles ? ", p1.equals(p2));
+    }
+
+    public void testingFour() throws Exception {
+
+
+        p1.empiler(41);
+        p1.empiler(42);
+        p1.empiler(43);
+
+        p2.empiler(41);
+        p2.empiler(42);
+        p2.empiler(43);
+
+        assertEquals ("Hachages de p1 and p2 are equals ?", true, 
+            p1.hashC() == p2.hashC());
+    }
 
 }
